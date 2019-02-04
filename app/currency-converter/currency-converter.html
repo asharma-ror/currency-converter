@@ -1,0 +1,38 @@
+<div class="container">
+  <h1>Currency Converter</h1>
+
+  <div class="text-danger">{{errorMessage}}</div>
+  <form name="currencyForm">
+    <div  class="row" ng-if="(currencyList | json) != '{}'">
+      <div  class="col-md-3 form-group">
+        <label for="fromCurrency">From:</label>
+        <select class="form-control" id="fromCurrency" ng-model="currency.from" ng-change="currencyValue = 0" required>
+          <option value="">--Select a currency--</option>
+          <option ng-repeat="(key, value) in currencyList" value="{{key}}"  >{{key}}</option>
+        </select>
+      </div>
+      <div class="form-group col-md-3">
+        <label for="toCurrency">To:</label>
+        <select class="form-control" id="toCurrency" ng-model="currency.to" ng-change="currencyValue = 0" required>
+          <option value="">--Select a currency--</option>
+          <option ng-repeat="(key, value) in currencyList" value="{{key}}">{{key}}</option>
+        </select>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="form-group col-md-3">
+        <label for="amount">Amount:</label>
+        <input type="text" class="form-control" id="amount" ng-model="currency.amount" ng-change="currencyValue = 0" name="amount" ng-pattern="/^-?[0-9]\d*(\.\d+)?$/" required/>
+        <span ng-if="currencyForm.amount.$error.pattern" class="text-danger">Wrong value</span>
+      </div>
+    </div>
+    <br\>
+    <button ng-click="convertCurrency()" class="btn btn-primary" id="convertCurrencyBtn" ng-disabled="currencyForm.$invalid">Convert Currency</button>
+  </form>
+  <br> <br>
+
+  <div ng-if="currencyValue">
+    {{currency.amount}} {{currency.from}} = {{currencyValue}} {{currency.to}}
+  </div>
+</div>
